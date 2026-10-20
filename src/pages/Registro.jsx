@@ -1,12 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/useUser';
 
 const Registro = () => {
+  const navigate = useNavigate();
+  const { register } = useUser();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [confirmarContrasena, setConfirmarContrasena] = useState('');
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
 
-  const manejarEnvio = (event) => {
+  const manejarEnvio = async (event) => {
     event.preventDefault();
 
     if (!correo.trim() || !contrasena.trim() || !confirmarContrasena.trim()) {
@@ -24,10 +28,12 @@ const Registro = () => {
       return;
     }
 
-    setMensaje({ tipo: 'success', texto: 'Registro exitoso.' });
-    setCorreo('');
-    setContrasena('');
-    setConfirmarContrasena('');
+    try {
+      await register({ email: correo, password: contrasena });
+      navigate('/');
+    } catch (error) {
+      setMensaje({ tipo: 'danger', texto: error.message });
+    }
   };
 
   return (

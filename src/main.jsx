@@ -8,7 +8,7 @@ import { UserProvider } from './context/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter basename="/hito-7-pizzeria_mammaMia">
+    <BrowserRouter basename="/hito-8-pizzeria_mammaMia">
       <CartProvider>
         <UserProvider>
           <App />

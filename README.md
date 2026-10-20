@@ -1,10 +1,10 @@
-# Pizzería Mamma Mia! - Hito 7
+# Pizzería Mamma Mia! - Hito 8
 
-Proyecto del Hito 7 de la Academia Desafío Latam - React Router II.
+Proyecto del Hito 8 de la Academia Desafío Latam - Autenticación con JWT.
 
 ## Descripción
 
-Aplicación web desarrollada con **React** y **Vite.js** que incorpora rutas protegidas, parámetros dinámicos y contextos globales para usuario y carrito.
+Aplicación web desarrollada con **React** y **Vite.js** que incorpora autenticación real con JWT, rutas protegidas y checkout autenticado.
 
 ## Componentes
 
@@ -20,6 +20,7 @@ Aplicación web desarrollada con **React** y **Vite.js** que incorpora rutas pro
 - **NoEncontrado**: vista 404 con enlace de regreso al inicio.
 - **CartContext**: estado global para agregar productos, modificar cantidades y calcular el total.
 - **UserContext**: token simulado y método para cerrar sesión.
+- **UserContext**: login, registro, perfil autenticado, token JWT y cierre de sesión.
 - **Footer**: pie de página con la información de derechos reservados.
 
 ## Tecnologías utilizadas

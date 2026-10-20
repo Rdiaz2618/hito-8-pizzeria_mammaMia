@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../context/useUser';
 
 const InicioSesion = () => {
+  const navigate = useNavigate();
+  const { login } = useUser();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [mensaje, setMensaje] = useState({ tipo: '', texto: '' });
 
-  const manejarEnvio = (event) => {
+  const manejarEnvio = async (event) => {
     event.preventDefault();
 
     if (!correo.trim() || !contrasena.trim()) {
@@ -18,9 +22,12 @@ const InicioSesion = () => {
       return;
     }
 
-    setMensaje({ tipo: 'success', texto: 'Inicio de sesión exitoso.' });
-    setCorreo('');
-    setContrasena('');
+    try {
+      await login({ email: correo, password: contrasena });
+      navigate('/');
+    } catch (error) {
+      setMensaje({ tipo: 'danger', texto: error.message });
+    }
   };
 
   return (

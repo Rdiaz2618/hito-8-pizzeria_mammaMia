@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useCart } from '../context/useCart';
 import { useUser } from '../context/useUser';
 import { formatPrice } from '../utils/formatPrice';
@@ -5,6 +6,34 @@ import { formatPrice } from '../utils/formatPrice';
 const Cart = () => {
   const { carrito, total, cambiarCantidad } = useCart();
   const { token } = useUser();
+  const [mensaje, setMensaje] = useState('');
+  const [enviando, setEnviando] = useState(false);
+
+  const pagar = async () => {
+    setEnviando(true);
+    setMensaje('');
+
+    try {
+      const respuesta = await fetch('http://localhost:5000/api/checkouts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart: carrito }),
+      });
+
+      if (!respuesta.ok) {
+        throw new Error('No se pudo completar la compra.');
+      }
+
+      setMensaje('Compra realizada con éxito.');
+    } catch (error) {
+      setMensaje(error.message);
+    } finally {
+      setEnviando(false);
+    }
+  };
 
   return (
     <main className="carrito-pagina">
@@ -35,8 +64,11 @@ const Cart = () => {
 
         <div className="carrito-total">
           <h3>Total: {formatPrice(total)}</h3>
-          <button className="btn btn-dark" disabled={!token}>Pagar</button>
+          <button className="btn btn-dark" disabled={!token || enviando} onClick={pagar}>
+            {enviando ? 'Procesando...' : 'Pagar'}
+          </button>
         </div>
+        {mensaje && <div className="alert alert-info mt-3 mb-0">{mensaje}</div>}
       </section>
     </main>
   );
