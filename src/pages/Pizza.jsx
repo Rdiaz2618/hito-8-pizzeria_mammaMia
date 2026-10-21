@@ -18,7 +18,15 @@ const Pizza = () => {
         }
 
         const datos = await respuesta.json();
-        setPizza(datos);
+        const pizzaLocal = pizzas.find((pizzaActual) =>
+          pizzaActual.id === datos.id || pizzaActual.name.toLowerCase() === datos.name?.toLowerCase(),
+        );
+        const imagenLocal = pizzaLocal?.img || pizzas[0].img;
+
+        setPizza({
+          ...datos,
+          img: imagenLocal,
+        });
       } catch {
         setPizza(pizzas.find((pizzaActual) => pizzaActual.id === id));
       } finally {

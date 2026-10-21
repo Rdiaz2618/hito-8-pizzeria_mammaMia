@@ -19,7 +19,18 @@ const Home = () => {
         }
 
         const datos = await respuesta.json();
-        setListaPizzas(datos);
+        const pizzasConImagenes = datos.map((pizza, indice) => {
+          const pizzaLocal = pizzas.find((pizzaActual) =>
+            pizzaActual.id === pizza.id || pizzaActual.name.toLowerCase() === pizza.name?.toLowerCase(),
+          );
+
+          return {
+            ...pizza,
+            img: pizzaLocal?.img || pizzas[indice % pizzas.length].img,
+          };
+        });
+
+        setListaPizzas(pizzasConImagenes);
       } catch {
         setListaPizzas(pizzas);
       } finally {
