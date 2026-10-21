@@ -12,14 +12,16 @@ const Header = () => {
           backgroundImage: `url(${heroImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          filter: 'blur(4px)',
-          transform: 'scale(1.1)',
           zIndex: 0,
         }}
       />
-  
 
-      <div className="position-relative" style={{ zIndex: 1 }}>
+      <div
+        className="position-absolute top-0 start-0 w-100 h-100"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.58)', zIndex: 1 }}
+      />
+
+      <div className="position-relative" style={{ zIndex: 2 }}>
         <h1 className="fw-bold">¡Pizzería Mamma Mia!</h1>
         <p className="mb-0">¡Tenemos las mejores pizzas que podrás encontrar!</p>
       </div>
